@@ -1,2 +1,4 @@
 aws_secret_access_key: "fill me"
 aws_access_key_id: "fill me"
+region: "ap-southeast-1"
+key_name: "fill me"
