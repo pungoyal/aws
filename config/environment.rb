@@ -6,7 +6,11 @@ Bundler.require :default, ENV['RACK_ENV'].to_sym
 module AWS
   module Config
     class << self
-      attr_accessor :aws_secret_access_key, :aws_access_key_id, :region, :key_name
+      attr_accessor :aws_secret_access_key,
+                    :aws_access_key_id,
+                    :region,
+                    :key_name,
+                    :security_group_name
     end
   end
 
@@ -23,3 +27,4 @@ AWS::Config.aws_secret_access_key = config["aws_secret_access_key"]
 AWS::Config.aws_access_key_id = config["aws_access_key_id"]
 AWS::Config.region = config["region"]
 AWS::Config.key_name = config["key_name"]
+AWS::Config.security_group_name = config["security_group_name"]

@@ -3,6 +3,7 @@ GEM
   specs:
     builder (3.0.0)
     coderay (1.0.5)
+    colorize (0.5.8)
     excon (0.12.0)
     fog (1.3.0)
       builder
@@ -34,6 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  colorize
   fog
   pry
   rake

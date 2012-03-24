@@ -4,10 +4,10 @@ namespace :servers do
     servers = connection.servers
     if servers.count > 0
       servers.each do |server|
-        p "#{server.dns_name} : #{server.state} : #{server.key_name}"
+        puts "#{server.id} : #{server.dns_name} : #{server.state} : #{server.created_at}".blue
       end
     else
-      p "nothing to see here. move on!"
+      puts "nothing to see here. move on!".colorize(:green)
     end
   end
 end
