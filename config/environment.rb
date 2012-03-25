@@ -10,7 +10,9 @@ module AWS
                     :aws_access_key_id,
                     :region,
                     :key_name,
-                    :security_group_name
+                    :security_group_name,
+                    :image_id,
+                    :flavor_id
     end
   end
 
@@ -26,7 +28,10 @@ config = YAML.load_file AWS.root('config', 'aws.yml')
 AWS::Config.aws_secret_access_key = config["aws_secret_access_key"]
 AWS::Config.aws_access_key_id = config["aws_access_key_id"]
 AWS::Config.region = config["region"]
+
 AWS::Config.key_name = config["key_name"]
 AWS::Config.security_group_name = config["security_group_name"]
+AWS::Config.image_id = config["image_id"]
+AWS::Config.flavor_id = config["flavor_id"]
 
 $connection = Fog::Compute.new({:provider => 'AWS', :region => AWS::Config.region, :aws_secret_access_key => AWS::Config.aws_secret_access_key, :aws_access_key_id => AWS::Config.aws_access_key_id})
