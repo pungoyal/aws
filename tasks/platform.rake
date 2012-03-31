@@ -4,23 +4,27 @@ namespace :platform do
     ensure_presence_of_key_pair AWS::Config.key_name
     security_group_id = ensure_presence_of_security_group AWS::Config.security_group_name
 
-    create_and_wait_for_server security_group_id
+    create_and_wait_for_server AWS::Config.key_name, security_group_id
     Rake::Task["servers:list"].invoke
   end
 
-  def create_and_wait_for_server security_group_id
+  def create_and_wait_for_server key_name, security_group_id
     options = {
         :key_name => AWS::Config.key_name,
         :security_group_ids => [security_group_id],
         :image_id => AWS::Config.image_id,
         :flavor_id => AWS::Config.flavor_id,
-        :user_data => "mkdir hello"
     }
 
     puts "instantiating a server with => #{options} ... ".cyan
 
     server = $connection.servers.create options
     server.wait_for { ready? }
+
+    commands = ["sudo aptitude install htop"]
+    ssh_options = {key_data: File.read("/Users/puneet/.ssh/#{key_name}.pem")}
+    server.ssh commands, ssh_options
+
     puts "server is booted up -> #{server.id}".green
     puts "ssh -i ~/.ssh/#{server.key_name}.pem ubuntu@#{server.dns_name}".blue
   end
