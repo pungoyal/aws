@@ -10,10 +10,10 @@ namespace :platform do
 
   def create_and_wait_for_server key_name, security_group_id
     options = {
-        :key_name => AWS::Config.key_name,
+        :key_name           => AWS::Config.key_name,
         :security_group_ids => [security_group_id],
-        :image_id => AWS::Config.image_id,
-        :flavor_id => AWS::Config.flavor_id,
+        :image_id           => AWS::Config.image_id,
+        :flavor_id          => AWS::Config.flavor_id,
     }
 
     puts "instantiating a server with => #{options} ... ".cyan
@@ -21,8 +21,9 @@ namespace :platform do
     server = $connection.servers.create options
     server.wait_for { ready? }
 
-    commands = ["sudo aptitude install htop"]
-    ssh_options = {key_data: File.read("/Users/puneet/.ssh/#{key_name}.pem")}
+    #commands    = ["sudo aptitude install -y htop build-essential", "sudo aptitude install -y ruby1.9.3", ""]
+    commands    = ["sudo aptitude install -y htop build-essential", "\\curl -L https://get.rvm.io | bash"]
+    ssh_options = { key_data: File.read("/Users/puneet/.ssh/#{key_name}.pem") }
     server.ssh commands, ssh_options
 
     puts "server is booted up -> #{server.id}".green
@@ -31,14 +32,14 @@ namespace :platform do
 
   def ensure_presence_of_key_pair key_name
     key_pairs = $connection.key_pairs
-    key_pair = key_pairs.find { |k| k.name == key_name } || create_key_pair(key_name)
+    key_pair  = key_pairs.find { |k| k.name == key_name } || create_key_pair(key_name)
     puts "Key pair -> #{key_pair.name}".cyan
     key_pair.name
   end
 
   def ensure_presence_of_security_group group_name
     security_groups = $connection.security_groups
-    security_group = security_groups.find { |g| g.name == group_name } || create_security_group(group_name)
+    security_group  = security_groups.find { |g| g.name == group_name } || create_security_group(group_name)
     puts "security group -> #{security_group.name}:#{security_group.group_id}".cyan
     security_group.group_id
   end

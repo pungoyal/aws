@@ -6,7 +6,7 @@ namespace :servers do
         puts "#{server.id} : #{server.dns_name} : #{server.state} : #{server.created_at}".light_blue
       end
     else
-      puts "nothing to see here. move on!".colorize(:green)
+      puts "nothing to see here. move on!".green
     end
   end
 
