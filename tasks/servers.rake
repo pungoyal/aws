@@ -10,6 +10,7 @@ namespace :servers do
     end
   end
 
+  desc "kill all servers"
   task :kill_all do
     servers = $connection.servers
     servers.each do |server|

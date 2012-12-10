@@ -44,12 +44,12 @@ namespace :platform do
   end
 
   def create_key_pair key_name
-    puts "created key pair #{key_name}".blue
-    raise Application.Exception
+    puts "created key pair #{key_name}".light_blue
+    raise Application::Error.new
   end
 
   def create_security_group group_name
-    puts "created security group #{group_name}".blue
-    raise Application.Exception
+    puts "created security group #{group_name}".light_blue
+    raise Application::Error.new
   end
 end
