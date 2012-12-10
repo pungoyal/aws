@@ -3,7 +3,7 @@ namespace :servers do
     servers = $connection.servers
     if servers.count > 0
       servers.each do |server|
-        puts "#{server.id} : #{server.dns_name} : #{server.state} : #{server.created_at}".blue
+        puts "#{server.id} : #{server.dns_name} : #{server.state} : #{server.created_at}".light_blue
       end
     else
       puts "nothing to see here. move on!".colorize(:green)
